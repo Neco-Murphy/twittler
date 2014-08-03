@@ -18,8 +18,8 @@
           while(index >= qty-10){
             var tweet = streams.home[index];
             var $tweet = $('<div></div>');
-            $tweet.text('@' + tweet.user + ': ' + tweet.message);
-             // + ' / ' + tweet.created_at.toString().slice(15,24));
+            $tweet.text('@' + tweet.user + ': ' + tweet.message
+             + ' / ' + tweet.created_at.toString().slice(15,24));
             $tweet.appendTo($body);
             index -= 1;
           }
