@@ -11,14 +11,28 @@
         var $body = $('body');
         $body.html('');
 
-        var index = streams.home.length - 1;
-        while(index >= 0){
-          var tweet = streams.home[index];
-          var $tweet = $('<div></div>');
-          $tweet.text('@' + tweet.user + ': ' + tweet.message);
-          $tweet.appendTo($body);
-          index -= 1;
-        }
+        var show = function(){
+          var qty = streams.home.length;
+          var index = qty-1;
+
+          while(index >= qty-10){
+            var tweet = streams.home[index];
+            var $tweet = $('<div></div>');
+            $tweet.text('@' + tweet.user + ': ' + tweet.message);
+             // + ' / ' + tweet.created_at.toString().slice(15,24));
+            $tweet.appendTo($body);
+            index -= 1;
+          }
+        };
+
+        show();
+
+        //show the user new tweers
+        window.setInterval(function(){
+          $("div").remove();
+          show();
+        },5000);
+
 
       });
 
