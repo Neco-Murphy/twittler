@@ -13,7 +13,7 @@
 
   #body{
     width:40%;
-    margin: 0 auto;
+    /*margin: 0 auto;*/
     border-left: 80px solid #81F79F;
     border-right: 80px solid #81F79F;
     padding: 10px;
@@ -27,7 +27,7 @@
     background-color: #81F79F;
     color: #fff;
     padding: 5px;
-    width: 40%;
+    width: 210px;
     margin-bottom: 0px;
   }
 
@@ -51,8 +51,10 @@
     margin: 0px;
   }
 
-  h2{
+  a {
     font-size:16px;
+    font-weight: bold;
+    text-decoration: none;
   }
 
   .message{
@@ -90,15 +92,14 @@
             // append a div to #list
             var $tweet = $('<div></div>');
             $tweet.text();
-            $tweet.addClass(tweet.user);    
-            $tweet.addClass("tweet");
+            $tweet.addClass(tweet.user).addClass("tweet");
             $tweet.appendTo($list);
 
             $last = $("#list div:last");
             // append the username to the div
-            var $user = $('<h2></h2>');
+            var $user = $('<a href="#"></a>');
             $user.text(tweet.user);
-            $user.addClass(tweet.user); 
+            $user.addClass(tweet.user).addClass("users"); 
             $user.appendTo($last);
             //append the message to the div
             var $message = $('<p></p>');
@@ -118,7 +119,7 @@
           var color = ["#ACFA58", "#81F7D8", "#A4A4A4", "#819FF7"];
           for(var i=0; i<users.length; i++){
             $('div').find("div ." + users[i]).css("border-color", color[i]);
-            $('h2').filter("." + users[i]).css("color", color[i]);
+            $('a').filter("." + users[i]).css("color", color[i]);
           };
         };
 
