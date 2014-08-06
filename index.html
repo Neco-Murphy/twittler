@@ -8,10 +8,14 @@
   body {
     font-family: Tahoma;
     color: #848484;
+
   }
 
-  #left{
-    padding-left: 20px;
+  #body{
+    width:50%;
+    margin: 0 auto;
+    /*border: 3px solid #81F79F;
+    padding: 10px;*/
   }
 
   h1 {
@@ -22,13 +26,13 @@
     color: #fff;
     padding: 5px;
     width: 200px;
-    margin-left: 10px;
+    margin: 20px auto;
   }
 
   </style>
   </head>
   <body>
-    <div id="left">
+    <div id="body">
       <h1>Twittler</h1>
       <div id="list">
       </div>
@@ -46,11 +50,25 @@
 
           while(index >= qty-10){
             var tweet = streams.home[index];
-            var $tweet = $('<div id="#tweet"></div>');
-            $tweet.text('@' + tweet.user + ': ' + tweet.message
-             + ' / ' + tweet.created_at.toString().slice(15,24));
+            // append a div to #list
+            var $tweet = $('<div></div>');
+            $tweet.text(tweet.created_at.toString().slice(15,24));
+            $tweet.addClass(tweet.user);    
+            $tweet.addClass("tweet");
             $tweet.appendTo($list);
-            index -= 1;
+
+            // append username to the div
+            var $user = $('<h2></h2>');
+            $user.text(tweet.user);
+            $user.appendTo($("#list div:last"));
+            //append message to the div
+            var $message = $('<p></p>');
+            $message.text(tweet.message);
+            $message.appendTo("#list div:last");
+
+
+
+            index -= 1;      
           }
         };
 
@@ -60,7 +78,7 @@
         window.setInterval(function(){
           $("#list > div").remove();
           show();
-        },5000);
+        },30000);
 
 
       });
