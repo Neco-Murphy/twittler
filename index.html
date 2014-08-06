@@ -13,17 +13,29 @@
 
   #body{
     width:40%;
-    /*margin: 0 auto;*/
+    margin: 0 auto;
     border-left: 80px solid #81F79F;
     border-right: 80px solid #81F79F;
     padding: 10px;
+  }
+
+   #refresh{
+    font-family: Impact;
+    letter-spacing: 2px;
+    background-color: #81F79F;
+    color: #fff;
+    font-size: 20px;
+    text-decoration: none;
+    padding: 3px;
+    float: right;
+    margin-right: 10px;
+    border-radius:5px;
   }
 
   h1 {
     font-family: Impact;
     font-size: 50px;
     letter-spacing: 5px;
-    /*text-align: center;*/
     background-color: #81F79F;
     color: #fff;
     padding: 5px;
@@ -31,13 +43,13 @@
     margin-bottom: 0px;
   }
 
-  #comment{
+  #comment, #timeline_title{
     font-family: Impact;
     letter-spacing: 2px;
     color: #81F79F;
-    margin:0px;
-    font-size: 16px;
-    text-align: right;
+    margin: 15px;
+    font-size: 24px;
+    text-align: left;
   }
 
   .tweet{
@@ -51,7 +63,7 @@
     margin: 0px;
   }
 
-  a {
+  .users{
     font-size:16px;
     font-weight: bold;
     text-decoration: none;
@@ -67,12 +79,38 @@
     text-align: right;
   }
 
+  .hide{
+    display: none;
+  }
+
+  #timeline{
+    margin: 20px 15px 15px 15px;
+    padding: 10px;
+    border: 3px solid #81F79F;
+    border-radius: 25px 
+  }
+
+  #timeline > h3{
+    margin: 0;
+  }
+
+  #timeline > p {
+    font-size: 15px;
+    margin: 3px;
+  }
+
+  .hide{
+    display: none;
+  }
+
   </style>
   </head>
   <body>
     <div id="body">
+      <a href="#" id="refresh">refresh</a>
       <h1>Twittler</h1>
-      <p id="comment">* showing latest 10 tweets.</p>
+      <p id="timeline_title" class="hide">--- Timeline --- </p>
+      <p id="comment">--- Latest 10 tweets --- </p>
       <div id="list">
       </div>
     </div>
@@ -81,6 +119,7 @@
 
       $(document).ready(function(){
         var $list = $('#list');
+        var color = ["#ACFA58", "#81F7D8", "#A4A4A4", "#819FF7"];
         // $body.html('');
 
         var show = function(){
@@ -108,7 +147,7 @@
             $message.appendTo($last);
             // append the time to the div
             var $time = $('<p></p>');
-            $time.text(tweet.created_at.toString().slice(15,24));
+            $time.text(tweet.created_at.toString().slice(16,24));
             $time.addClass("time");
             $time.appendTo($last);
 
@@ -116,22 +155,52 @@
           };
 
           // change the tweet color by user ("#F7D358")
-          var color = ["#ACFA58", "#81F7D8", "#A4A4A4", "#819FF7"];
           for(var i=0; i<users.length; i++){
             $('div').find("div ." + users[i]).css("border-color", color[i]);
             $('a').filter("." + users[i]).css("color", color[i]);
           };
+
+        //show clicked user's timeline on top
+        $(".tweet").on("click", "a",function(){
+          event.stopPropagation();
+          $("#timeline").remove();
+          $('#timeline_title').removeClass('hide');
+          var this_user = $(this).text();
+          var user_color = color[users.indexOf(this_user)];
+          $("<div id='timeline'></div>").insertBefore($("#comment"));
+          $("#timeline").css('border-color', user_color);
+          // add title
+          var $title = $("<h3></h3>");
+          $title.appendTo($("#timeline"));
+          $title.text(this_user);
+          $title.css("color", user_color);
+
+          // add tweets
+          var index_2 = streams.home.length-1;
+          while(index_2 >= 0){
+            var tweet = streams.home[index_2];
+            if( tweet.user === this_user){
+            // append a p to #timeline
+              var $tweet = $('<p></p>');
+              $tweet.text("@" + tweet.created_at.toString().slice(16,24) +" "+ tweet.message);
+              $tweet.appendTo($("#timeline"));
+            };
+            index_2 -= 1;      
+          };
+
+        });
         };
 
         show();
-
-        //show the user new tweers
-        window.setInterval(function(){
+        //refresh to show new tweets
+        $("#refresh").on("click",function(){
+          event.preventDefault();
           $("#list > div").remove();
+          $('#timeline_title').addClass('hide');
+          $('#timeline').remove();
           show();
-        },30000);
-
-        $("#")
+        });
+        
       });
 
     </script>
