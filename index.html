@@ -12,21 +12,48 @@
   }
 
   #body{
-    width:50%;
+    width:40%;
     margin: 0 auto;
-    /*border: 3px solid #81F79F;
-    padding: 10px;*/
+    border-left: 80px solid #81F79F;
+    border-right: 80px solid #81F79F;
+    padding: 10px;
   }
 
   h1 {
     font-family: Impact;
     font-size: 50px;
     letter-spacing: 5px;
+    /*text-align: center;*/
     background-color: #81F79F;
     color: #fff;
     padding: 5px;
-    width: 200px;
-    margin: 20px auto;
+    width: 40%;
+    padding: 20px auto;
+  }
+
+  .tweet{
+    border: 3px solid #81F79F;
+    border-radius: 25px;
+    margin: 15px;
+    padding: 5px;
+  }
+
+  .tweet > h2, .tweet > p{
+    margin: 0px;
+  }
+
+  h2{
+    font-size:16px;
+  }
+
+  .message{
+    font-size: 15px;
+    text-align: center;
+  }
+
+  .time{
+    font-size: 12px;
+    text-align: right;
   }
 
   </style>
@@ -52,20 +79,26 @@
             var tweet = streams.home[index];
             // append a div to #list
             var $tweet = $('<div></div>');
-            $tweet.text(tweet.created_at.toString().slice(15,24));
+            $tweet.text();
             $tweet.addClass(tweet.user);    
             $tweet.addClass("tweet");
             $tweet.appendTo($list);
 
-            // append username to the div
+            $last = $("#list div:last");
+            // append the username to the div
             var $user = $('<h2></h2>');
             $user.text(tweet.user);
-            $user.appendTo($("#list div:last"));
-            //append message to the div
+            $user.appendTo($last);
+            //append the message to the div
             var $message = $('<p></p>');
             $message.text(tweet.message);
-            $message.appendTo("#list div:last");
-
+            $message.addClass("message");
+            $message.appendTo($last);
+            // append the time to the div
+            var $time = $('<p></p>');
+            $time.text(tweet.created_at.toString().slice(15,24));
+            $time.addClass("time");
+            $time.appendTo($last);
 
 
             index -= 1;      
