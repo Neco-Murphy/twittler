@@ -32,7 +32,7 @@
   }
 
   .tweet{
-    border: 3px solid #81F79F;
+    border: 3px solid #00FFFF;
     border-radius: 25px;
     margin: 15px;
     padding: 5px;
@@ -100,8 +100,13 @@
             $time.addClass("time");
             $time.appendTo($last);
 
-
             index -= 1;      
+          };
+
+          // change the tweet color by user ("#F7D358")
+          var color = ["#ACFA58", "#81F7D8", "#A4A4A4", "#819FF7"];
+          for(var i=0; i<users.length; i++){
+            $('#list').find("." + users[i]).css("border-color", color[i]);
           }
         };
 
