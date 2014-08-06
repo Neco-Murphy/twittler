@@ -43,7 +43,7 @@
     margin-bottom: 0px;
   }
 
-  #comment, #timeline_title{
+  #latest, #timeline_title{
     font-family: Impact;
     letter-spacing: 2px;
     color: #81F79F;
@@ -110,7 +110,7 @@
       <a href="#" id="refresh">refresh</a>
       <h1>Twittler</h1>
       <p id="timeline_title" class="hide">--- Timeline --- </p>
-      <p id="comment">--- Latest 10 tweets --- </p>
+      <p id="latest">--- Latest 10 tweets --- </p>
       <div id="list">
       </div>
     </div>
@@ -167,7 +167,7 @@
           $('#timeline_title').removeClass('hide');
           var this_user = $(this).text();
           var user_color = color[users.indexOf(this_user)];
-          $("<div id='timeline'></div>").insertBefore($("#comment"));
+          $("<div id='timeline'></div>").insertBefore($("#latest"));
           $("#timeline").css('border-color', user_color);
           // add title
           var $title = $("<h3></h3>");
