@@ -3,13 +3,42 @@
   <head>
     <script src="jquery.js"></script>
     <script src="data_generator.js"></script>
+    <style type="text/css">
+
+  body {
+    font-family: Tahoma;
+    color: #848484;
+  }
+
+  #left{
+    padding-left: 20px;
+  }
+
+  h1 {
+    font-family: Impact;
+    font-size: 50px;
+    letter-spacing: 5px;
+    background-color: #81F79F;
+    color: #fff;
+    padding: 5px;
+    width: 200px;
+    margin-left: 10px;
+  }
+
+  </style>
   </head>
   <body>
+    <div id="left">
+      <h1>Twittler</h1>
+      <div id="list">
+      </div>
+    </div>
+    
     <script>
 
       $(document).ready(function(){
-        var $body = $('body');
-        $body.html('');
+        var $list = $('#list');
+        // $body.html('');
 
         var show = function(){
           var qty = streams.home.length;
@@ -17,10 +46,10 @@
 
           while(index >= qty-10){
             var tweet = streams.home[index];
-            var $tweet = $('<div></div>');
+            var $tweet = $('<div id="#tweet"></div>');
             $tweet.text('@' + tweet.user + ': ' + tweet.message
              + ' / ' + tweet.created_at.toString().slice(15,24));
-            $tweet.appendTo($body);
+            $tweet.appendTo($list);
             index -= 1;
           }
         };
@@ -29,7 +58,7 @@
 
         //show the user new tweers
         window.setInterval(function(){
-          $("div").remove();
+          $("#list > div").remove();
           show();
         },5000);
 
