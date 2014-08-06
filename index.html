@@ -32,7 +32,7 @@
   }
 
   .tweet{
-    border: 3px solid #81F79F;
+    border: 3px solid #00FFFF;
     border-radius: 25px;
     margin: 15px;
     padding: 5px;
@@ -88,6 +88,7 @@
             // append the username to the div
             var $user = $('<h2></h2>');
             $user.text(tweet.user);
+            $user.addClass(tweet.user); 
             $user.appendTo($last);
             //append the message to the div
             var $message = $('<p></p>');
@@ -100,9 +101,15 @@
             $time.addClass("time");
             $time.appendTo($last);
 
-
             index -= 1;      
-          }
+          };
+
+          // change the tweet color by user ("#F7D358")
+          var color = ["#ACFA58", "#81F7D8", "#A4A4A4", "#819FF7"];
+          for(var i=0; i<users.length; i++){
+            $('div').find("div ." + users[i]).css("border-color", color[i]);
+            $('h2').filter("." + users[i]).css("color", color[i]);
+          };
         };
 
         show();
@@ -113,7 +120,7 @@
           show();
         },30000);
 
-
+        $("#")
       });
 
     </script>
