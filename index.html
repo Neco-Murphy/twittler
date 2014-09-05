@@ -147,10 +147,37 @@
             $message.appendTo($last);
             // append the time to the div
             var $time = $('<p></p>');
-            $time.text(tweet.created_at.toString().slice(16,24));
+            var now = new Date();
+            now = now.toString().slice(16,24);
+            var createdat = tweet.created_at.toString().slice(16,24);
+            // $time.text( createdat + "//" + now );
+            //append created at as user-friendly way
+            var user_friendly = "";
+            var created_min = Number(createdat.slice(3,5));
+            var now_min = Number(now.slice(3,5));
+            var created_sec = Number(createdat.slice(6,8));
+            var now_sec = Number(now.slice(6,8));
+            if(created_min === now_min){
+              if(created_sec === now_sec){
+                $time.text( 'now ' );
+              }else{
+                if(created_sec < now_sec){
+                  user_friendly = (now_sec - created_sec) + ' seconds';
+                }else{
+                  user_friendly = (60 - created_sec + now_sec) + ' seconds';
+                };
+                $time.text( user_friendly + ' ago' );
+              }
+            }else{
+              if(created_min < now_min){
+                user_friendly = (now_min - created_min) + ' minutes';
+              }else{
+                user_friendly = (60 - created_min + now_min) + ' minutes';
+              };
+              $time.text( user_friendly + ' ago' );
+            };
             $time.addClass("time");
             $time.appendTo($last);
-
             index -= 1;      
           };
 
@@ -182,7 +209,36 @@
             if( tweet.user === this_user){
             // append a p to #timeline
               var $tweet = $('<p></p>');
-              $tweet.text("@" + tweet.created_at.toString().slice(16,24) +" "+ tweet.message);
+              
+              //append created at as user-friendly way
+              var createdat = tweet.created_at.toString().slice(16,24);
+              var now = new Date();
+              now = now.toString().slice(16,24);
+              var user_friendly = "";
+              var created_min = Number(createdat.slice(3,5));
+              var now_min = Number(now.slice(3,5));
+              var created_sec = Number(createdat.slice(6,8));
+              var now_sec = Number(now.slice(6,8));
+            if(created_min === now_min){
+              if(created_sec === now_sec){
+                user_friendly = now;
+              }else{
+                if(created_sec < now_sec){
+                  user_friendly = (now_sec - created_sec) + ' seconds ago';
+                }else{
+                  user_friendly = (60 - created_sec + now_sec) + ' seconds ago';
+                };
+              }
+            }else{
+              if(created_min < now_min){
+                user_friendly = (now_min - created_min) + ' minutes ago';
+              }else{
+                user_friendly = (60 - created_min + now_min) + ' minutes ago';
+              };
+            };
+            //till here is to give a value to user_friendly
+
+              $tweet.text( user_friendly + " / " + tweet.message);
               $tweet.appendTo($("#timeline"));
             };
             index_2 -= 1;      
